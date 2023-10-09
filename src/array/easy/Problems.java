@@ -1,6 +1,9 @@
 package array.easy;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class Problems {
 
@@ -85,6 +88,84 @@ public class Problems {
         while (count < arr.length)
             arr[count++] = 0;
         return arr;
+    }
+
+
+    /**
+     * 4.print fibonacci series
+     */
+    public void printFibonacciSeries(int n) {
+        int prev = 1;
+        int curr = 0;
+        for (int i = 0; i <= n; i++) {
+            System.out.print(curr + " ");
+            int temp = prev;
+            prev = curr + temp;
+            curr = temp;
+        }
+
+    }
+
+    /**
+     * 5.Convert decimal number into binary
+     */
+    public int getBinaryCode(int n) {
+        int sum = 0;
+        int i = 0;
+        while (n != 0) {
+            int bit = n % 2;
+            sum = (int) (bit * Math.pow(10, i) + sum);
+            n = n >> 1;
+            i++;
+        }
+        return sum;
+    }
+
+    /**
+     * 6.Convert binary number into decimal
+     */
+    public int convertBinaryToDecimal(int n) {
+        int i = 0;
+        int num = n;
+        int sum = 0;
+        while (num != 0) {
+            int digit = num % 2;
+            sum = (int) (sum + (digit * Math.pow(2, i)));
+            num = num / 10;
+            i++;
+        }
+        return sum;
+    }
+
+    /**
+     * 7.swap alternate array. Ex. = [1,2,3,4,5,6,7,8] -> [2,1,4,3,6,5,8,7]
+     */
+    public int[] swapAlternateArray(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i += 2) {
+            int temp = arr[i];
+            arr[i] = arr[i + 1];
+            arr[i + 1] = temp;
+        }
+
+        return arr;
+    }
+
+    /**
+     * 8. find unique(non-duplicate) number in an array. Ex. = [2,7,2,8,7,6,8] -> 6
+     */
+
+    public void findUniqueNumber(int[] arr) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int uniqueIndex = arr[0];
+        for (int item : arr) {
+            map.merge(item, 1, Integer::sum);
+        }
+
+        for(int item :arr){
+            if (map.get(uniqueIndex) > map.get(item))
+                uniqueIndex = item;
+        }
+        System.out.println(uniqueIndex);
     }
 
 }
