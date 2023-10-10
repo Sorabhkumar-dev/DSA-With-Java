@@ -174,7 +174,7 @@ public class Problems {
     }
 
     /**
-     * find unique occurrence in an array [1,2,4,6,7,6,2.3] -> true,  [1,3,3,1] -> false
+     * 9.find unique occurrence in an array [1,2,4,6,7,6,2.3] -> true,  [1,3,3,1] -> false
      */
 
     public boolean findUniqueOccurrence(int[] arr) {
@@ -191,7 +191,7 @@ public class Problems {
     }
 
     /**
-     * find duplicate number n = 5, [1,2,3,4,5,2]  -> 2
+     * 10.find duplicate number n = 5, [1,2,3,4,5,2]  -> 2
      */
 
     public int findDuplicateNumber(int[] arr){
@@ -199,7 +199,41 @@ public class Problems {
         for(int item:arr){
             if (set.contains(item)) return item;
             else set.add(item);
+
         }
         return 0;
+    }
+
+    /**
+     * 11.find duplicate numbers  [1,2,3,4,1,5,2]  -> [1,2]
+     */
+    public List<Integer> findAllDuplicateValue(int[] arr){
+        List<Integer> list = new LinkedList<>();
+        HashSet<Integer> set = new HashSet<>();
+        for (int item:arr){
+            if (set.contains(item)){
+                if (!list.contains(item))
+                    list.add(item);
+            }else{
+                set.add(item);
+            }
+            if (!list.contains(item)){
+                list.add(item);
+            }
+        }
+        return list;
+    }
+
+    public List<Integer> findDuplicateNumbersTwo(int[] arr){
+        HashMap<Integer, Integer> map = new HashMap<>();
+        List<Integer> list = new LinkedList<>();
+        for (int item : arr) {
+            map.merge(item, 1, Integer::sum);
+        }
+        Set<Integer> keys = map.keySet();
+        keys.iterator().forEachRemaining((item)->{
+            if (map.get(item) > 1) list.add(item);
+        });
+        return list;
     }
 }
