@@ -307,4 +307,95 @@ public class Problems {
         }
         return arr;
     }
+
+    /**
+     * 14.get string first occurrence
+     */
+
+    public int getStrFirstOccurrence(String haystack, String needle) {
+        for (int i = 0; i < haystack.length(); i++) {
+            int lastIndex = i + needle.length();
+            if (lastIndex <= haystack.length()) {
+                String temp = haystack.substring(i, lastIndex);
+                if (temp.equals(needle)) return i;
+            } else return -1;
+        }
+        return -1;
+    }
+
+    /**
+     * 15. check string is palindrome or not
+     */
+    public boolean isPalindrome(String str) {
+        int i = 0;
+        int j = str.length() - 1;
+        while (i < j) {
+            if (str.charAt(i) != str.charAt(j)) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    /**
+     * 15. longest palindrome
+     */
+    public String longestPalindrome(String s) {
+        if ((s.length() < 2) || isPalindrome(s)) return s;
+        String palindrome = "";
+        for (int i = 0; i < s.length(); i++) {
+            for (int j = i + 1; j <= s.length(); j++) {
+                String temp = s.substring(i, j);
+                if (isPalindrome(temp)) {
+                    if (palindrome.length() < temp.length())
+                        palindrome = temp;
+                }
+            }
+        }
+        return palindrome;
+    }
+
+
+    /**
+     * 15. moveZeroes
+     */
+    public void moveZeroes1(int[] nums) {
+        int k = nums.length - 1;
+        for (int i = 0; i < nums.length; i++)
+            if (nums[i] == 0) {
+                nums[i] = Integer.MAX_VALUE;
+            }
+
+        for (int i = 0; i < nums.length; i++) {
+            int currentMin = i;
+            for (int j = i; j < nums.length; j++) {
+                if (nums[j] < nums[currentMin]) currentMin = j;
+            }
+            if (currentMin != i) {
+                int temp = nums[currentMin];
+                nums[currentMin] = nums[i];
+                nums[i] = temp;
+            }
+        }
+
+        while (nums[k] == Integer.MAX_VALUE) {
+            nums[k] = 0;
+            k--;
+        }
+    }
+
+    public void moveZeroes2(int[] nums) {
+        System.out.println(Arrays.toString(nums));
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] == 0) {
+                int j = i + 1;
+                while (j < nums.length && nums[j] != 0){
+                    nums[j-1] = nums[j];
+                    j++;
+                }
+                nums[j-1] = 0;
+            }
+        }
+        System.out.println(Arrays.toString(nums));
+    }
 }

@@ -5,8 +5,9 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {1,2,3,5,3,2,4,16,3};
+        int[] arr = {2,1};
         Sorting sort = new Sorting();
-        System.out.println(Arrays.toString(sort.insertionSort(arr)));
+        Problems pb = new Problems();
+        pb.moveZeroes2(arr);
     }
 }
