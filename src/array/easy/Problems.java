@@ -243,19 +243,19 @@ public class Problems {
      * 12.get first and last occurrence of an element in sorted array [0,1,2,3,3,3,3,3] -> [3,6]
      */
     public int[] getFirstAndLastOccurrence(int[] nums, int target) {
-        int[] newArr = {-1,-1};
+        int[] newArr = {-1, -1};
         int firstOccurrence = -1;
         int lastOccurrence = -1;
         int start = 0;
         int end = nums.length - 1;
         int mid = -1;
-        for (int i =0;i< nums.length;i++){
-            if (nums[i] == target){
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == target) {
                 mid = i;
                 break;
             }
         }
-        if (mid == -1){
+        if (mid == -1) {
             return newArr;
         }
         while (start <= end) {
@@ -283,5 +283,28 @@ public class Problems {
         return newArr;
     }
 
+    /**
+     * 13.get first and last occurrence of an element in sorted array [17,18,5,4,6,1] -> [18,6,6,6,1,-1]
+     */
+    public int[] replaceElements(int[] arr) {
+        if (arr.length < 2) return arr;
+        int i;
+        int maxValue;
+        for (i = 0; i < arr.length - 1; i++) {
+            int currentIndex = i + 1;
+            maxValue = arr[i];
+            while (maxValue < arr[currentIndex] && currentIndex < arr.length - 1) {
+                maxValue = arr[currentIndex];
+                arr[currentIndex] = 0;
+                currentIndex++;
+            }
 
+            for (int j = currentIndex - 1; i <= j; j--) {
+                arr[j] = maxValue;
+            }
+            maxValue = 0;
+            i = currentIndex - 1;
+        }
+        return arr;
+    }
 }

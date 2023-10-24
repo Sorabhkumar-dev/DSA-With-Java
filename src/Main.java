@@ -1,14 +1,12 @@
 import array.easy.Problems;
+import array.easy.alogorithem.Sorting;
 
 import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        Problems prob = new Problems();
-       int[] arr = {1};
-        System.out.println(arr.length);
-        System.out.println(Arrays.toString(prob.getFirstAndLastOccurrence(arr,1)));
+        int[] arr = {1,2,3,5,3,2,4,16,3};
+        Sorting sort = new Sorting();
+        System.out.println(Arrays.toString(sort.insertionSort(arr)));
     }
-
-
 }
