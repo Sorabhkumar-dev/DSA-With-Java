@@ -54,8 +54,7 @@ public class Problems {
         int low = 0;
         int high = 0;
 
-        if (arr.length < 1)
-            return 0;
+        if (arr.length < 1) return 0;
 
         for (int i : arr) {
             if (i > high) {
@@ -81,10 +80,8 @@ public class Problems {
     public int[] moveZeroesToLast(int[] arr) {
         int count = 0;
         for (int i = 0; i < arr.length; i++)
-            if (arr[i] != 0)
-                arr[count++] = arr[i];
-        while (count < arr.length)
-            arr[count++] = 0;
+            if (arr[i] != 0) arr[count++] = arr[i];
+        while (count < arr.length) arr[count++] = 0;
         return arr;
     }
 
@@ -160,8 +157,7 @@ public class Problems {
         }
 
         for (int item : arr) {
-            if (map.get(uniqueIndex) > map.get(item))
-                uniqueIndex = item;
+            if (map.get(uniqueIndex) > map.get(item)) uniqueIndex = item;
         }
         System.out.println(uniqueIndex);
     }
@@ -213,8 +209,7 @@ public class Problems {
         HashSet<Integer> set = new HashSet<>();
         for (int item : arr) {
             if (set.contains(item)) {
-                if (!list.contains(item))
-                    list.add(item);
+                if (!list.contains(item)) list.add(item);
             } else {
                 set.add(item);
             }
@@ -276,8 +271,7 @@ public class Problems {
             }
             mid = start + (end - start) / 2;
         }
-        if (lastOccurrence == -1 && firstOccurrence != -1)
-            lastOccurrence = firstOccurrence;
+        if (lastOccurrence == -1 && firstOccurrence != -1) lastOccurrence = firstOccurrence;
         newArr[0] = firstOccurrence;
         newArr[1] = lastOccurrence;
         return newArr;
@@ -347,8 +341,7 @@ public class Problems {
             for (int j = i + 1; j <= s.length(); j++) {
                 String temp = s.substring(i, j);
                 if (isPalindrome(temp)) {
-                    if (palindrome.length() < temp.length())
-                        palindrome = temp;
+                    if (palindrome.length() < temp.length()) palindrome = temp;
                 }
             }
         }
@@ -385,17 +378,69 @@ public class Problems {
     }
 
     public void moveZeroes2(int[] nums) {
-        System.out.println(Arrays.toString(nums));
         for (int i = nums.length - 1; i >= 0; i--) {
             if (nums[i] == 0) {
                 int j = i + 1;
-                while (j < nums.length && nums[j] != 0){
-                    nums[j-1] = nums[j];
+                while (j < nums.length && nums[j] != 0) {
+                    nums[j - 1] = nums[j];
                     j++;
                 }
-                nums[j-1] = 0;
+                nums[j - 1] = 0;
             }
         }
-        System.out.println(Arrays.toString(nums));
     }
+
+
+    /**
+     * 15. rotate array
+     */
+    public void rotate(int[] nums, int k) {
+        k %= nums.length;
+        int i = 0;
+        while (i < k) {
+            int temp = nums[nums.length - 1];
+            for (int j = nums.length - 1; j > 0; j--) {
+                nums[j] = nums[j - 1];
+            }
+            nums[0] = temp;
+            i++;
+        }
+    }
+
+    public void rotate2(int[] nums, int k) {
+        System.out.println(Arrays.toString(nums));
+        int[] arr = new int[nums.length];
+
+        for (int i = 0; i < nums.length; i++) {
+            arr[(i + k) % nums.length] = nums[i];
+        }
+        System.arraycopy(arr, 0, nums, 0, arr.length);
+        System.out.println(Arrays.toString(arr));
+    }
+
+    /**
+     * 15. is array rotated and sorted
+     */
+    public boolean isArrayRotedSorted(int[] nums) {
+        int count = 0;
+        int pivot = -1;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] > nums[i + 1]) {
+                count++;
+                pivot = i;
+                if (count > 1) return false;
+            }
+
+            if (pivot != -1) {
+                int temp = pivot;
+                while (temp >= 0) {
+                    if (nums[i+1] > nums[temp]) return false;
+                    temp--;
+                }
+            }
+        }
+
+        return true;
+    }
+
 }
