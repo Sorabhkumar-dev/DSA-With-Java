@@ -5,9 +5,23 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        int[] arr = {2,1,3,4};
+        char[] ch = {'a', 'a', 'b', 'b', 'c', 'c', 'c'};
+        int[][] arr = {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        };
         Sorting sort = new Sorting();
         Problems pb = new Problems();
-        System.out.println(pb.isArrayRotedSorted(arr));
+
+        System.out.println(pb.searchMatrix(arr,3));;
+//        System.out.println("-------------------------------");
+//        System.out.println(pb.printSpiralMatrix(arr, arr.length, arr[0].length));
+
+////        System.out.println("-------------------------------");
+//        pb.rotateImage90Degree(arr);
+//        pb.findMaximumInMatrixRow(arr);
+//        pb.countSortedRowInMatrix(arr);
+//        pb.findCommonElementInMatrixRows(arr);
     }
 }

@@ -1,5 +1,6 @@
 package array.easy;
 
+import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.*;
 
@@ -434,7 +435,7 @@ public class Problems {
             if (pivot != -1) {
                 int temp = pivot;
                 while (temp >= 0) {
-                    if (nums[i+1] > nums[temp]) return false;
+                    if (nums[i + 1] > nums[temp]) return false;
                     temp--;
                 }
             }
@@ -442,5 +443,330 @@ public class Problems {
 
         return true;
     }
+
+    /**
+     * 16. check if string is palindrome
+     */
+
+    public boolean isPalindromeStr(String s) {
+        StringBuilder str = new StringBuilder();
+        String newStr = "";
+        int j = 0, k;
+        for (int i = 0; i < s.length(); i++) {
+            char temp = s.charAt(i);
+            if ((temp >= 'a' && temp <= 'z') || (temp >= 'A' && temp <= 'Z') || Character.isDigit(temp))
+                str.append(temp);
+        }
+
+        newStr = str.toString().toLowerCase();
+        k = newStr.length() - 1;
+
+        while (j <= k) {
+            if (newStr.charAt(j) != newStr.charAt(k)) return false;
+            k--;
+            j++;
+        }
+        return true;
+    }
+
+    /**
+     * 17. reverse character array beside empty character
+     */
+    public char[] reverseStr(char[] str) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int k = -1;
+        for (int i = 0; i < str.length; i++) {
+            if (str[i] == ' ' || i == str.length - 1) {
+                int j;
+                if (str[i] == ' ')
+                    j = i - 1;
+                else
+                    j = i;
+                while (j > k) {
+                    stringBuilder.append(str[j]);
+                    j--;
+                }
+                if (str[i] == ' ')
+                    stringBuilder.append(str[i]);
+                k = i;
+            }
+        }
+        for (int i = 0; i < stringBuilder.toString().length(); i++)
+            str[i] = stringBuilder.toString().charAt(i);
+        return str;
+    }
+
+    /**
+     * 18. get maximum number of occurrence of particular character in a string
+     */
+    public char getMaximumOccurrenceChar(String str) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        char maxOccurrence = str.charAt(0);
+        for (int i = 0; i < str.length(); i++) {
+            if (map.containsKey(str.charAt(i)))
+                map.put(str.charAt(i), map.get(str.charAt(i)) + 1);
+            else
+                map.put(str.charAt(i), 1);
+        }
+
+        for (char ch : map.keySet()) {
+            if (map.get(ch) > map.get(maxOccurrence))
+                maxOccurrence = ch;
+        }
+
+        return maxOccurrence;
+    }
+
+    //19.Remove string occurrence
+    public String removeOccurrences(String s, String part) {
+        String temp = s;
+        while (!temp.isEmpty() && temp.contains(part)) {
+            temp = temp.replaceFirst(part, "");
+        }
+        return temp;
+    }
+
+    //20.Remove duplicate character
+    public String removeDuplicates(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (int i = 0; i < s.length(); i++) {
+            if (!stack.isEmpty() && stack.peek() == s.charAt(i))
+                stack.pop();
+            else
+                stack.push(s.charAt(i));
+        }
+        return stack.toString().replace("[", "").replace("]", "").replaceAll(", ", "");
+    }
+
+    //21.compress string
+    public int compress(char[] chars) {
+        int[] arr = new int[26];
+        StringBuilder str = new StringBuilder();
+        for (char aChar : chars) {
+            arr[aChar - 'a']++;
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] == 1) {
+                str.append((char) (i + 'a'));
+            } else if (arr[i] > 1) {
+                str.append((char) (i + 'a'));
+                str.append(arr[i]);
+            }
+        }
+        char[] newCharArr = str.toString().toCharArray();
+        System.arraycopy(newCharArr, 0, chars, 0, str.toString().length());
+        return newCharArr.length;
+    }
+
+    //23 max row sum
+    public List<Integer> twoDimensionalArrayRowSum(int[][] arr) {
+        List<Integer> rowSum = new ArrayList<>();
+        for (int row = 0; row < arr.length; row++) {
+            int sum = 0;
+            for (int col = 0; col < arr[row].length; col++) {
+                sum += arr[row][col];
+            }
+            rowSum.add(sum);
+        }
+        return rowSum;
+    }
+
+    //24 max column sum
+    public List<Integer> twoDimensionalArrayColumnSum(int[][] arr) {
+        List<Integer> columnSum = new ArrayList<>();
+        for (int col = 0; col < arr.length; col++) {
+            int sum = 0;
+            for (int row = 0; row < arr[col].length; row++) {
+                sum += arr[row][col];
+            }
+            columnSum.add(sum);
+        }
+        return columnSum;
+    }
+
+    // 25. print 2D array
+    public void print2DArray(int[][] arr) {
+        for (int col = 0; col < arr.length; col++) {
+            for (int row = 0; row < arr[col].length; row++) {
+                System.out.print(arr[row][col] + "  ");
+            }
+            System.out.println();
+        }
+    }
+
+    // 26. print wave pattern in 2D array
+    public void printInWavePattern(int[][] arr) {
+        for (int row = 0; row < arr.length; row++) {
+            if (row % 2 == 0)
+                for (int col = 0; col < arr[row].length; col++) {
+                    System.out.print(arr[col][row] + "  ");
+                }
+            else
+                for (int col = arr[row].length - 1; col >= 0; col--) {
+                    System.out.print(arr[col][row] + "  ");
+                }
+            System.out.println();
+        }
+    }
+
+    public void printMatrix(int[][] arr) {
+        for (int row = 0; row < arr.length; row++) {
+            for (int col = 0; col < arr[0].length; col++) {
+                if (arr[row][col] <= 9)
+                    System.out.print(arr[row][col] + "    ");
+                else
+                    System.out.print(arr[row][col] + "   ");
+            }
+            System.out.println();
+        }
+    }
+
+
+    // 26. rotate image 90 degree
+    public void rotateImage90Degree(int[][] matrix) {
+        int startColumn = 0;
+        int endColumn = matrix[0].length - 1;
+        for (int row = 0; row < matrix.length; row++) {
+            for (int col = 0; col < row; col++) {
+                int temp = matrix[row][col];
+                matrix[row][col] = matrix[col][row];
+                matrix[col][row] = temp;
+            }
+        }
+
+        while ( startColumn < endColumn) {
+            for (int row = 0; row < matrix.length; row++) {
+                int temp = matrix[row][startColumn];
+                matrix[row][startColumn] = matrix[row][endColumn];
+                matrix[row][endColumn] = temp;
+            }
+            startColumn++;
+            endColumn--;
+        }
+        printMatrix(matrix);
+    }
+
+    //27. find maximum in row
+    public void findMaximumInMatrixRow(int[][] arr) {
+        List<Integer> maxRowElements = new ArrayList<>();
+        for (int row = 0; row < arr.length; row++) {
+            int max = Integer.MIN_VALUE;
+            for (int col = 0; col < arr[0].length; col++) {
+                if (max < arr[row][col])
+                    max = arr[row][col];
+            }
+            maxRowElements.add(max);
+        }
+        System.out.println(maxRowElements);
+    }
+
+    //28. count sorted row in matrix
+    public void countSortedRowInMatrix(int[][] arr) {
+        int sortedRow = 0;
+        for (int row = 0; row < arr.length; row++) {
+            boolean isSortedRow = true;
+            for (int col = 1; col < arr[0].length; col++) {
+                if (arr[row][col - 1] > arr[row][col]) {
+                    isSortedRow = false;
+                    break;
+                }
+            }
+            if (isSortedRow)
+                sortedRow++;
+        }
+        System.out.println("Sorted row is ->" + sortedRow);
+    }
+
+    // 29. find common element in row in matrix
+    public void findCommonElementInMatrixRows(int[][] arr) {
+        List<Integer> commonElements = new ArrayList<>();
+        List<List<Integer>> rows = new ArrayList<>();
+        for (int row = 0; row < arr.length; row++) {
+            List<Integer> items = new ArrayList<>();
+            for (int col = 0; col < arr[0].length; col++) {
+                items.add(arr[row][col]);
+            }
+            rows.add(items);
+        }
+        for (int i = 0; i < rows.get(0).size(); i++) {
+            boolean isCommonElement = true;
+            for (List<Integer> list : rows) {
+                if (!list.contains(rows.get(0).get(i))) {
+                    isCommonElement = false;
+                    break;
+                }
+            }
+            if (isCommonElement)
+                commonElements.add(rows.get(0).get(i));
+        }
+
+        System.out.println(commonElements);
+    }
+
+    // 30. print spiral matrix
+    public List<Integer> printSpiralMatrix(int[][] arr, int row, int col) {
+        List<Integer> ans = new ArrayList<>();
+        int count = 0;
+        int total = row * col;
+
+        int startRow = 0;
+        int startCol = 0;
+
+        int endRow = row - 1;
+        int endCol = col - 1;
+
+        while (count < total) {
+            for (int i = startCol; count < total && i <= endCol; i++) {
+                ans.add(arr[startRow][i]);
+                count++;
+            }
+            startRow++;
+            for (int i = startRow; count < total && i <= endRow; i++) {
+                ans.add(arr[i][endCol]);
+                count++;
+            }
+            endCol--;
+
+            for (int i = endCol; count < total && i >= startCol; i--) {
+                ans.add(arr[endRow][i]);
+                count++;
+            }
+            endRow--;
+
+            for (int i = endRow; count < total && i >= startRow; i--) {
+                ans.add(arr[i][startCol]);
+                count++;
+            }
+            startCol++;
+        }
+
+        return ans;
+    }
+
+    // 31. print search in matrix
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int row = matrix.length;
+        int column = matrix[0].length;
+
+        int start = 0;
+        int end =  row*column - 1;
+
+        int mid = start+ (end - start)/2;
+
+        while (start <= end){
+            int element = matrix[mid/column][mid%column];
+            if (target == element)
+                return true;
+            else if (target < element)
+                end = mid - 1;
+            else
+                start = mid + 1;
+            mid =  start + (end - start)/2;
+        }
+
+        return false;
+    }
+
 
 }
