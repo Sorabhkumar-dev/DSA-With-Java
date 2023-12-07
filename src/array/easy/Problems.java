@@ -635,7 +635,7 @@ public class Problems {
             }
         }
 
-        while ( startColumn < endColumn) {
+        while (startColumn < endColumn) {
             for (int row = 0; row < matrix.length; row++) {
                 int temp = matrix[row][startColumn];
                 matrix[row][startColumn] = matrix[row][endColumn];
@@ -750,23 +750,152 @@ public class Problems {
         int column = matrix[0].length;
 
         int start = 0;
-        int end =  row*column - 1;
+        int end = row * column - 1;
 
-        int mid = start+ (end - start)/2;
+        int mid = start + (end - start) / 2;
 
-        while (start <= end){
-            int element = matrix[mid/column][mid%column];
+        while (start <= end) {
+            int element = matrix[mid / column][mid % column];
             if (target == element)
                 return true;
             else if (target < element)
                 end = mid - 1;
             else
                 start = mid + 1;
-            mid =  start + (end - start)/2;
+            mid = start + (end - start) / 2;
         }
 
         return false;
     }
 
+    // 32. count prime number
+    public int countPrimeNumber(int n) {
+        int cnt = 0;
+        boolean[] primes = new boolean[n];
+        Arrays.fill(primes, true);
+
+        for (int i = 2; i < n; i++) {
+            if (primes[i]) {
+                cnt++;
+                for (int j = i * 2; j < n; j = j + i) {
+                    primes[j] = false;
+                }
+            }
+        }
+        return cnt;
+    }
+
+    // 33. leetcode Qns.1688
+    public int numberOfMatches(int n) {
+        if (n <= 2) return 1;
+        if (n % 2 == 0)
+            return n / 2 + numberOfMatches(n / 2);
+        else
+            return n / 2 + numberOfMatches(n / 2 + 1);
+    }
+
+    // 34. leetcode Qns.2264
+    public String largestGoodInteger(String num) {
+        String largestNum = "";
+        for (int i = 0; i < num.length(); i++) {
+            if ((i + 2) < num.length() && num.charAt(i) == num.charAt(i + 1) && num.charAt(i) == num.charAt(i + 2)) {
+                if (!largestNum.isEmpty() && Integer.parseInt(largestNum) < Integer.parseInt(num.substring(i, i + 3)))
+                    largestNum = num.substring(i, i + 3);
+                if (largestNum.isEmpty())
+                    largestNum = num.substring(i, i + 3);
+            }
+        }
+        return largestNum;
+    }
+
+    public String largestOddNumber(String num) {
+        for (int i = num.length(); i > 0; i--) {
+            if ((num.charAt(i - 1) - '0') % 2 != 0) return num.substring(0, i);
+        }
+        return "";
+    }
+
+    // 36. leetcode Qns.1716
+    public int totalMoney(int n) {
+        int ans = 0;
+        int week = 0;
+       while (n > 0){
+           for (int i = 1;i<=Math.min(n,7);i++)
+               ans = ans + week + i;
+           n -= 7;
+           week++;
+
+       }
+       return ans;
+    }
+
+    // 37. leetcode Qns.80
+    public int removeDuplicates(int[] nums) {
+        int removedElements = 0;
+        int uniqueNumber = 0;
+        int i = 0;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        while (i<nums.length-removedElements){
+           if (!map.containsKey(nums[i])) {
+               map.put(nums[i], 1);
+               uniqueNumber++;
+               i++;
+           }
+           else {
+               if (map.get(nums[i]) < 2) {
+                   map.put(nums[i], map.get(nums[i]) + 1);
+                   uniqueNumber++;
+                   i++;
+               }
+               else{
+                   int j = i;
+                   while (j < (nums.length - (removedElements+1))) {
+                       nums[j] = nums[j + 1];
+                       j++;
+                   }
+                   nums[j] = 0;
+                   removedElements++;
+               }
+           }
+        }
+
+        System.out.println(Arrays.toString(nums));
+
+        return uniqueNumber;
+    }
+
+    // 37. leetcode Qns 169. Majority Element
+    public int majorityElement(int[] nums) {
+        int majority = 0;
+        int max = Integer.MIN_VALUE;
+        HashMap<Integer,Integer> map = new HashMap<>();
+        for (int num : nums) {
+            if (!map.containsKey(num))
+                map.put(num, 1);
+            else
+                map.put(num, map.get(num) + 1);
+        }
+
+        for(int key:map.keySet()){
+            int currentElement = map.get(key);
+            if (currentElement > max) {
+                max = currentElement;
+                majority = key;
+            }
+        }
+        return majority;
+    }
+
+    //38. leetcode Qns 121. Best Time to Buy and Sell Stock [7,1,5,3,6,4]
+    public int maxProfit(int[] prices) {
+        int profit = 0;
+        int maxProfit = Integer.MAX_VALUE;
+        for (int price : prices) {
+            maxProfit = Math.min(maxProfit, price);
+            profit = Math.max(profit, (price - maxProfit));
+        }
+
+        return profit;
+    }
 
 }
