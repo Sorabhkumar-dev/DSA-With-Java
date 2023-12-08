@@ -819,14 +819,14 @@ public class Problems {
     public int totalMoney(int n) {
         int ans = 0;
         int week = 0;
-       while (n > 0){
-           for (int i = 1;i<=Math.min(n,7);i++)
-               ans = ans + week + i;
-           n -= 7;
-           week++;
+        while (n > 0) {
+            for (int i = 1; i <= Math.min(n, 7); i++)
+                ans = ans + week + i;
+            n -= 7;
+            week++;
 
-       }
-       return ans;
+        }
+        return ans;
     }
 
     // 37. leetcode Qns.80
@@ -834,29 +834,27 @@ public class Problems {
         int removedElements = 0;
         int uniqueNumber = 0;
         int i = 0;
-        HashMap<Integer,Integer> map = new HashMap<>();
-        while (i<nums.length-removedElements){
-           if (!map.containsKey(nums[i])) {
-               map.put(nums[i], 1);
-               uniqueNumber++;
-               i++;
-           }
-           else {
-               if (map.get(nums[i]) < 2) {
-                   map.put(nums[i], map.get(nums[i]) + 1);
-                   uniqueNumber++;
-                   i++;
-               }
-               else{
-                   int j = i;
-                   while (j < (nums.length - (removedElements+1))) {
-                       nums[j] = nums[j + 1];
-                       j++;
-                   }
-                   nums[j] = 0;
-                   removedElements++;
-               }
-           }
+        HashMap<Integer, Integer> map = new HashMap<>();
+        while (i < nums.length - removedElements) {
+            if (!map.containsKey(nums[i])) {
+                map.put(nums[i], 1);
+                uniqueNumber++;
+                i++;
+            } else {
+                if (map.get(nums[i]) < 2) {
+                    map.put(nums[i], map.get(nums[i]) + 1);
+                    uniqueNumber++;
+                    i++;
+                } else {
+                    int j = i;
+                    while (j < (nums.length - (removedElements + 1))) {
+                        nums[j] = nums[j + 1];
+                        j++;
+                    }
+                    nums[j] = 0;
+                    removedElements++;
+                }
+            }
         }
 
         System.out.println(Arrays.toString(nums));
@@ -868,7 +866,7 @@ public class Problems {
     public int majorityElement(int[] nums) {
         int majority = 0;
         int max = Integer.MIN_VALUE;
-        HashMap<Integer,Integer> map = new HashMap<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
             if (!map.containsKey(num))
                 map.put(num, 1);
@@ -876,7 +874,7 @@ public class Problems {
                 map.put(num, map.get(num) + 1);
         }
 
-        for(int key:map.keySet()){
+        for (int key : map.keySet()) {
             int currentElement = map.get(key);
             if (currentElement > max) {
                 max = currentElement;
@@ -898,4 +896,28 @@ public class Problems {
         return profit;
     }
 
+    public boolean arrayStringsAreEqual(String[] word1, String[] word2) {
+        StringBuilder str1 = new StringBuilder();
+        StringBuilder str2 = new StringBuilder();
+
+        for (String str : word1)
+            str1.append(str);
+
+        for (String str : word2)
+            str2.append(str);
+
+        return str1.toString().contentEquals(str2);
+    }
+
+
+    //39. leetcode Qns 606. Construct String from Binary Tree
+    public String tree2str(TreeNode root) {
+        if (root == null) return "";
+        String str = "" + root.val;
+        if (root.left != null)
+            str = str + "(" + tree2str(root.left) + ")";
+        if (root.right != null)
+            str = str + "(" + tree2str(root.right) + ")";
+        return str;
+    }
 }
