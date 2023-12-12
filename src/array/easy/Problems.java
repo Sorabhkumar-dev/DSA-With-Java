@@ -2,6 +2,7 @@ package array.easy;
 
 import javax.swing.*;
 import java.lang.reflect.Array;
+import java.math.BigInteger;
 import java.util.*;
 
 public class Problems {
@@ -920,4 +921,135 @@ public class Problems {
             str = str + "(" + tree2str(root.right) + ")";
         return str;
     }
+
+    //40. leetcode Qns 94. Binary Tree Inorder Traversal
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> treeItems = new ArrayList<>();
+        Stack<TreeNode> stack = new Stack<>();
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.add(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            treeItems.add(root.val);
+
+            stack.add(root.right);
+            root = root.right;
+
+
+        }
+        return treeItems;
+    }
+
+
+    //40. leetcode Qns 1160. find-words-that-can-be-formed-by-characters
+    public int countCharacters(String[] words, String chars) {
+        int count = 0;
+        HashMap<Character, Integer> charsMap = new HashMap<>();
+
+        for (int i = 0; i < chars.length(); i++) {
+            if (!charsMap.containsKey(chars.charAt(i)))
+                charsMap.put(chars.charAt(i), 1);
+            else
+                charsMap.put(chars.charAt(i), charsMap.get(chars.charAt(i)) + 1);
+        }
+
+        for (String word : words) {
+
+            HashMap<Character, Integer> currentMap = new HashMap<>();
+            boolean isAllMatch = true;
+
+            for (int j = 0; j < word.length(); j++) {
+                if (!currentMap.containsKey(word.charAt(j)))
+                    currentMap.put(word.charAt(j), 1);
+                else
+                    currentMap.put(word.charAt(j), currentMap.get(word.charAt(j)) + 1);
+            }
+
+            for (Character key : currentMap.keySet()) {
+                if (charsMap.get(key) == null || charsMap.get(key) < currentMap.get(key)) {
+                    isAllMatch = false;
+                    break;
+                }
+            }
+
+            if (isAllMatch)
+                count += word.length();
+        }
+
+        return count;
+    }
+
+
+    //41. leetcode Qns 1493
+    public int longestSubarray(int[] nums) {
+        int count = 0;
+        int i = 0;
+        int window = 0;
+
+        while (i < nums.length && nums[i] == 0)
+            i++;
+
+
+        while (i < nums.length) {
+            int zeros = 0;
+            while (i < nums.length && zeros < 2) {
+                if (nums[i] == 0) zeros++;
+                i++;
+            }
+            i++;
+        }
+        return count;
+    }
+
+    //41. leetcode Qns 1287
+    public int findElement(int[] arr) {
+        if (arr.length < 1) return 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int ans25 = arr[0];
+        System.out.println("Ans " + ans25);
+        for (int item : arr) {
+            if (!map.containsKey(item)) {
+                map.put(item, 1);
+            } else {
+                map.put(item, map.get(item) + 1);
+            }
+        }
+
+        for (Integer key : map.keySet()) {
+            if (map.get(ans25) < map.get(key))
+                ans25 = key;
+        }
+        return ans25;
+    }
+
+    //42. leetcode Qns 1493 [0,1,1,1,0,1,1,0,1]
+    public int longestSubArray(int[] nums) {
+        int r = 0, l = 0;
+        int j = 0;
+        int countZeros = 0;
+        int maxLength = 0;
+
+//        for (int i = 0; i < nums.length; i++) {
+//            if (nums[i] == 0)countZeros++;
+//            for (;countZeros > 1 && j<= i;j++){
+//                if (nums[j] == 1)countZeros--;
+//            }
+//            maxLength = Math.max(maxLength,(i - j+1));
+//        }
+//     [0,1,1,1,0,1,1,0,1]
+        while (r < nums.length) {
+            if (nums[r] == 0) countZeros++;
+            while (countZeros > 1) {
+                if (nums[l] == 0) countZeros--;
+                l++;
+            }
+            maxLength = Math.max(maxLength,r-l+1);
+            r++;
+        }
+
+        return maxLength - 1;
+    }
+
 }
