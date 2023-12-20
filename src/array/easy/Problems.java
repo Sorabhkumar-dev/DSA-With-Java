@@ -1,8 +1,5 @@
 package array.easy;
 
-import javax.swing.*;
-import java.lang.reflect.Array;
-import java.math.BigInteger;
 import java.util.*;
 
 public class Problems {
@@ -1045,11 +1042,154 @@ public class Problems {
                 if (nums[l] == 0) countZeros--;
                 l++;
             }
-            maxLength = Math.max(maxLength,r-l+1);
+            maxLength = Math.max(maxLength, r - l + 1);
             r++;
         }
 
         return maxLength - 1;
     }
+
+    //43. leetcode Qns 242
+    public boolean isAnagram(String s, String t) {
+        int[] tArr = new int[26];
+        int[] sArr = new int[26];
+
+        for (int i = 0; i < s.length(); i++) {
+            sArr[s.charAt(i) - 'a']++;
+        }
+
+        for (int i = 0; i < t.length(); i++) {
+            tArr[t.charAt(i) - 'a']++;
+        }
+
+        for (int i = 0; i < 26; i++) {
+            if (tArr[i] != sArr[i]) return false;
+        }
+
+        return true;
+    }
+
+    //43. leetcode Qns 49
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> ans = new ArrayList<>();
+        HashMap<String, List<String>> ansMap = new HashMap<>();
+
+        for (String str : strs) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            List<String> temp;
+            if (ansMap.containsKey(key)) {
+                temp = ansMap.get(key);
+                temp.add(str);
+
+            } else {
+                temp = new ArrayList<>();
+                temp.add(str);
+            }
+            ansMap.put(key, temp);
+        }
+        for (String key : ansMap.keySet())
+            ans.add(ansMap.get(key));
+
+        return ans;
+    }
+
+    //44
+    public void printNumToString(String[] map, int num) {
+        if (num < 10) {
+            System.out.println(map[num]);
+            return;
+        }
+        printNumToString(map, num / 10);
+        System.out.println(map[num % 10]);
+    }
+
+
+    //45
+    public boolean isSortedArray(int[] arr, int index) {
+        if (index == arr.length - 1) return true;
+        if (arr[index] > arr[index + 1]) return false;
+        return isSortedArray(arr, index + 1);
+    }
+
+    //46
+    public int sumOfNNumber(int n) {
+        if (n == 1) return 1;
+        return n + sumOfNNumber(n - 1);
+    }
+
+    //47
+    public int sumOfDigitsNumber(int digit) {
+        if (digit < 10)
+            return digit;
+        return digit % 10 + sumOfDigitsNumber(digit / 10);
+    }
+
+    //47
+    public int factorialOfNNumber(int n) {
+        if (n == 1) return 1;
+        return n * factorialOfNNumber(n - 1);
+    }
+
+
+    //48.patterns
+    public void printPattern(int n) {
+        if (n == 0) {
+            return;
+        }
+        print(n);
+        System.out.println();
+        printPattern(n - 1);
+        print(n);
+        System.out.println();
+    }
+
+    public void print(int n) {
+        if (n == 1) {
+            System.out.print(n + " ");
+            return;
+        }
+        print(n - 1);
+        System.out.print(n + " ");
+    }
+
+    public boolean isStrPalindrome(String str) {
+        if (str.length() <= 1) return true;
+        if (str.charAt(0) != str.charAt(str.length() - 1)) return false;
+        return isStrPalindrome(str.substring(1, str.length() - 1));
+    }
+
+
+    //50
+    public int findKthPositive(int[] arr, int k) {
+        int i =1,j = 0;
+        while (true){
+            if (!isContains(arr,i)){
+                j++;
+            }
+            if (j == k )
+                return i;
+            i++;
+        }
+
+    }
+
+    public boolean isContains(int[] arr, int item) {
+        int start = 0;
+        int end = arr.length - 1;
+        int mid = (end + (end - start)) / 2;
+        while (start <= end){
+            if (arr[mid] == item)
+                return true;
+            else if(arr[mid] < item)
+                start = mid+1;
+            else
+                end = mid - 1;
+            mid = (end + (end - start)) / 2;
+        }
+        return false;
+    }
+
 
 }
